@@ -30,7 +30,7 @@ namespace Permit.Application.Permits
         public async Task<IEnumerable<PermitViewModel>> Get()
         {
             var permitRepository = unitOfWork.GetRepositoryFor<Domain.Entities.Permit>();
-            var result = await permitRepository.Get();
+            var result = await permitRepository.Get(null, new string[] { "PermitType" });
             var permits = result.ToList();
             return this.mapper.Map<IEnumerable<PermitViewModel>>(permits);
         }

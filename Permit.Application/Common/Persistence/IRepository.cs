@@ -7,6 +7,6 @@ namespace Permit.Application.Common.Persistence
         TEntity Add(TEntity entity);
         TEntity Update(TEntity entity);
         TEntity Delete(TEntity entity);
-        Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>>? filter = null);
+        Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>>? filter = null, string[]? includeProperties = null);
     }
 }

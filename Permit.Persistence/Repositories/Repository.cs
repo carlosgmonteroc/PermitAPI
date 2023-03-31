@@ -30,17 +30,20 @@ namespace Permit.Persistence.Repositories
             return dbSet.Remove(entity).Entity;
         }
 
-        public async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>>? filter = null)
+        public async Task<IEnumerable<TEntity>> Get(Expression<Func<TEntity, bool>>? filter = null, string[] includeProperties = null)
         {
             IQueryable<TEntity> query = Filter(dbSet, filter);
-
+            if (includeProperties != null)
+                foreach (var p in includeProperties)
+                {
+                    query = query.Include(p);
+                }
             return await query.ToListAsync();
         }
         private IQueryable<TEntity> Filter(IQueryable<TEntity> query, Expression<Func<TEntity, bool>>? filter = null)
         {
             if (filter != null)
                 query = query.Where(filter);
-
             return query;
         }
     }
